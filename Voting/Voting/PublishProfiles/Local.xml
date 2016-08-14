@@ -8,7 +8,7 @@
   -->
   <ClusterConnectionParameters />
   <ApplicationParameterFile Path="..\ApplicationParameters\Local.xml" />
-  <UpgradeDeployment Mode="Monitored" Enabled="true">
+  <UpgradeDeployment Mode="Monitored" Enabled="false">
     <Parameters FailureAction="Rollback" UpgradeReplicaSetCheckTimeoutSec="1" Force="True" HealthCheckRetryTimeoutSec="120" HealthCheckStableDurationSec="60" />
   </UpgradeDeployment>
 </PublishProfile>

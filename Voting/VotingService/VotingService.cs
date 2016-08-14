@@ -44,48 +44,6 @@ namespace VotingService
             };
         }
 
-        private async Task ProcessRequestAsync(HttpListenerContext context, CancellationToken ct)
-        {
-            String output = null;
-            try
-            {
-                // Grab the vote item string from a "Vote=" query string parameter 
-                HttpListenerRequest request = context.Request;
-                String voteItem = request.QueryString["Vote"];
-                if (voteItem != null)
-                {
-                    // TODO: Here, write code to perform the following steps: 
-                    // Hint: See the RunAsync method to help you with these steps. 
-                    // 1. Get a reference to a reliable dictionary using the 
-                    // inherited StateManager. The dictionary should String keys 
-                    // and int values; Name the dictionary “Votes” 
-
-                    //var myDictionary = await StateManager.GetOrAddAsync<IReliableDictionary<string, long>>("myDictionary");
-
-                    // 2. Create a new transaction using the inherited StateManager 
-                    // 3. Add the voteItem (with a count of 1) if it doesn’t already 
-                    // exist or increment its count if it does exist. 
-                    // The code below prepares the HTML response. It gets all the current 
-                    // vote items (and counts) and separates each with a break (<br>) 
-                    var q = from kvp in voteDictionary.CreateEnumerable()
-                                //orderby kvp.Key // Intentionally commented out 
-                            select $"Item={kvp.Key}, Votes={kvp.Value}";
-                    output = String.Join("<br>", q);
-                }
-            }
-            catch (Exception ex) { output = ex.ToString(); }
-            // Write response to client: 
-            using (var response = context.Response)
-            {
-                if (output != null)
-                {
-                    Byte[] outBytes = Encoding.UTF8.GetBytes(output);
-                    response.OutputStream.Write(outBytes, 0, outBytes.Length);
-                }
-            }
-        }
-
-
         protected override Task OnOpenAsync(CancellationToken cancellationToken)
         {
             //_client = new FabricClient();
