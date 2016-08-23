@@ -2,14 +2,14 @@
 Login-AzureRmAccount
 Select-AzureRmSubscription -SubscriptionName "Jomit's Internal Subscription"
 
-$certificatePath = "C:\SFHackathon\HOL"
+$certificatePath = "C:\SFHackathon"
 $certificateName = "sflabcertificate1"
-$certificatePassword = "pass@Word1"
+$certificatePassword = "pass@word1"
 $certificateDNSName = "jomitsflab"
 
-$keyvaultRGName = "ServiceFabricTrials"
-$location = "West US 2"
-$keyvaultName = "sflabvalut"
+$keyvaultRGName = "AllVaults"
+$location = "West US"
+$keyvaultName = "sflabvault"
 
 $subscriptionId = "d0c802cd-23ce-4323-a183-5f6d9a84743e"
 
@@ -21,13 +21,13 @@ Import-Module C:\github\Service-Fabric\Scripts\ServiceFabricRPHelpers\ServiceFab
 Invoke-AddCertToKeyVault -SubscriptionId $subscriptionId -ResourceGroupName $keyvaultRGName -Location $location -VaultName $keyvaultName -CertificateName $certificateName -Password $certificatePassword -CreateSelfSignedCertificate -DnsName $certificateDNSName -OutputPath $certificatePath
 
 #Name  : CertificateThumbprint
-#Value : E4EA021F3B2CEDE4CE868286329DC32B74BA4D02
+#Value : 500673EC2E38EBD521A1BB4C1BE90925235C625B
 
 #Name  : SourceVault
-#Value : /subscriptions/d0c802cd-23ce-4323-a183-5f6d9a84743e/resourceGroups/ServiceFabricTrials/providers/Microsoft.KeyVault/vaults/sflabvalut
+#Value : /subscriptions/d0c802cd-23ce-4323-a183-5f6d9a84743e/resourceGroups/AllVaults/providers/Microsoft.KeyVault/vaults/sflabvault
 
 #Name  : CertificateURL
-#Value : https://sflabvalut.vault.azure.net:443/secrets/sflabcertificate1/46c70164dd93466b85aba707bac610f3
+#Value : https://sflabvault.vault.azure.net:443/secrets/sflabcertificate1/e6a94400297f45bbb179fe449e1562fd
 
 Import-PfxCertificate -Exportable -CertStoreLocation Cert:\CurrentUser\TrustedPeople -FilePath "$certificatePath\$certificateName.pfx" -Password (Read-Host -AsSecureString -Prompt "Enter Certificate Password ")
 Import-PfxCertificate -Exportable -CertStoreLocation Cert:\CurrentUser\My -FilePath "$certificatePath\$certificateName.pfx" -Password (Read-Host -AsSecureString -Prompt "Enter Certificate Password ")
